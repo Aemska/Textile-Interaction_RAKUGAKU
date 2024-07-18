@@ -1,4 +1,6 @@
 #include <EventButton.h>
+byte noteON = 144;
+byte noteOFF = 128;
 
 // Instantiate EventButton
 EventButton button1(53);
@@ -17,18 +19,20 @@ EventButton button13(26);
 
 // Function to handle the 'clicked' event
 void onButtonClicked(EventButton& eb, int buttonNumber) {
-  Serial.print("button");
-  Serial.print(buttonNumber);
-  Serial.print(" clicked, clickCount: ");
-  Serial.println(eb.clickCount());
+  // Serial.print("button");
+  // Serial.print(buttonNumber);
+  // Serial.print(" clicked, clickCount: ");
+  // Serial.println(eb.clickCount());
 }
 
 // Function to handle the 'released' event
 void onButtonReleased(EventButton& eb, int buttonNumber) {
-  Serial.print("button");
-  Serial.print(buttonNumber);
-  Serial.print(" released, clickCount: ");
-  Serial.println(eb.clickCount());
+  // Serial.print("button");
+  // Serial.print(buttonNumber);
+  MIDImessage(noteON, 60 + buttonNumber, 120);
+  // Serial.print(" released, clickCount: ");
+  // Serial.println(eb.clickCount());
+
 }
 
 // Wrapper functions for each button to pass the button number
@@ -63,7 +67,7 @@ void onButton13Released(EventButton& eb) { onButtonReleased(eb, 13); }
 void setup() {
   Serial.begin(9600);
   delay(500);
-  Serial.println("EventButton Basic Example");
+  //Serial.println("EventButton Basic Example");
 
   // Link the events to the wrapper functions
   button1.setClickHandler(onButton1Clicked);
@@ -111,32 +115,39 @@ void loop() {
   button13.update();
 
   // Print the state of each button
-  Serial.print("b1: ");
-  Serial.print(button1.isPressed());
-  Serial.print(", b2: ");
-  Serial.print(button2.isPressed());
-  Serial.print(", b3: ");
-  Serial.print(button3.isPressed());
-  Serial.print(", b4: ");
-  Serial.print(button4.isPressed());
-  Serial.print(", b5: ");
-  Serial.print(button5.isPressed());
-  Serial.print(", b6: ");
-  Serial.print(button6.isPressed());
-  Serial.print(", b7: ");
-  Serial.print(button7.isPressed());
-  Serial.print(", b8: ");
-  Serial.print(button8.isPressed());
-  Serial.print(", b9: ");
-  Serial.print(button9.isPressed());
-  Serial.print(", b10: ");
-  Serial.print(button10.isPressed());
-  Serial.print(", b11: ");
-  Serial.print(button11.isPressed());
-  Serial.print(", b12: ");
-  Serial.print(button12.isPressed());
-  Serial.print(", b13: ");
-  Serial.println(button13.isPressed());
+  // Serial.print("b1: ");
+  // Serial.print(button1.isPressed());
+  // Serial.print(", b2: ");
+  // Serial.print(button2.isPressed());
+  // Serial.print(", b3: ");
+  // Serial.print(button3.isPressed());
+  // Serial.print(", b4: ");
+  // Serial.print(button4.isPressed());
+  // Serial.print(", b5: ");
+  // Serial.print(button5.isPressed());
+  // Serial.print(", b6: ");
+  // Serial.print(button6.isPressed());
+  // Serial.print(", b7: ");
+  // Serial.print(button7.isPressed());
+  // Serial.print(", b8: ");
+  // Serial.print(button8.isPressed());
+  // Serial.print(", b9: ");
+  // Serial.print(button9.isPressed());
+  // Serial.print(", b10: ");
+  // Serial.print(button10.isPressed());
+  // Serial.print(", b11: ");
+  // Serial.print(button11.isPressed());
+  // Serial.print(", b12: ");
+  // Serial.print(button12.isPressed());
+  // Serial.print(", b13: ");
+  // Serial.println(button13.isPressed());
 
-  delay(100); // Add a delay to make the output more readable
+  // delay(100); // Add a delay to make the output more readable
+}
+
+//send MIDI message
+void MIDImessage(byte command, byte data1, byte data2) {
+  Serial.write(command);
+  Serial.write(data1);
+  Serial.write(data2);
 }
